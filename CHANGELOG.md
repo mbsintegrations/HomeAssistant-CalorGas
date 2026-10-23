@@ -1,5 +1,12 @@
 # Changes
 
+## Unreleased
+
+### Development
+
+- Update the Playwright browser-test dependency from 1.62.1 to 1.64.1, including its upstream bug fixes.
+- This maintenance change affects development and CI only. The Home Assistant integration, sensors, portal polling, saved readings and dashboard cards are unchanged.
+
 ## 1.1.0b1 — 2026-10-15
 
 First public beta, packaged as a HACS custom integration under GNU GPL v3.0 only.

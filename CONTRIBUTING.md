@@ -6,6 +6,8 @@ Use synthetic portal fixtures and keep all runtime files under `custom_component
 
 Run the commands in the README. `npm run test:ui` needs a Playwright Chromium installation or a local Chrome executable and regenerates the committed PNG assets/screenshots. Python 3.12+ is sufficient for the adapter suite; actual runtime compatibility is determined by the declared Home Assistant minimum. Frontend development uses Node 24 or newer.
 
+Playwright is a development dependency used by the browser checks. It is not included in `custom_components/calor_gas` or the manual-install ZIP. Test-tool dependency updates belong in the development changelog and do not require an integration version bump. Commit the matching `package.json` and `package-lock.json` changes together and pass all required CI checks before merging.
+
 The Python test suite uses HA adapters; do not describe it as a full Home Assistant end-to-end test. Test fresh installation, reconfiguration, restart/cache recovery and card loading in a separate HA instance before promoting a stable release. Never use household actuators for testing.
 
 All HACS and Hassfest checks must pass without ignores. Changes to the version require matching `manifest.json`, `const.py`, README resource URLs and changelog updates. Keep `strings.json` and `translations/en.json` in sync. The JavaScript package uses the corresponding npm prerelease version.
