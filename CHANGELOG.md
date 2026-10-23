@@ -8,7 +8,8 @@ First public beta, packaged as a HACS custom integration under GNU GPL v3.0 only
 - Six shared sensors and fixed six-hour polling.
 - Persistent validated snapshots retained during portal outages and restarts.
 - Capped forecasts such as `365+` preserve their lower-bound meaning.
-- Reusable tank card, visual editor, phone/compact layouts and light/dark styling.
+- Two tank-card presets, with or without quick links, a visual editor, phone/compact layouts and automatic light/dark styling.
+- Full-width standard cards, compact presets and readable status text in both themes.
 - Automatic storage-managed module registration and documented YAML fallback.
 - Original local logos, privacy-filtered diagnostics, regression tests and CI validation.
 

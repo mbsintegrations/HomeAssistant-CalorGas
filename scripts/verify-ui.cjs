@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2026 Skymashi
+// SPDX-FileCopyrightText: 2026 MBS Integrations
 // SPDX-License-Identifier: GPL-3.0-only
 
 const fs = require("node:fs"), path = require("node:path"), http = require("node:http"), assert = require("node:assert/strict");
@@ -44,7 +44,7 @@ const {chromium} = require("playwright");
       days_remaining_is_lower_bound: false, last_reading: "2024-06-15", last_successful_sync: "2024-06-15T10:00:00Z",
       run_out_date: "2024-09-07", delivery_status: "No delivery scheduled", data_stale: false, portal_available: true};
     const proof = [];
-    for (const [name, value, changes, compact, viewport, cardWidth, dark] of [
+    for (const [name, value, changes, compact, viewport, cardWidth, dark, withLinks = false] of [
       ["healthy", "62", {}, false, 1280, 420, false],
       ["cached", "57", {data_stale: true, portal_available: false, days_remaining: 365, days_remaining_is_lower_bound: true}, false, 390, 358, false],
       ["low", "12", {days_remaining: 9}, false, 390, 358, false],
@@ -52,30 +52,33 @@ const {chromium} = require("playwright");
       ["compact", "57", {data_stale: true, portal_available: false, days_remaining: 365, days_remaining_is_lower_bound: true}, true, 390, 178, false],
       ["dark", "62", {}, false, 390, 358, true],
       ["zero", "0", {days_remaining: 0}, true, 390, 178, false],
+      ["with-links", "62", {}, false, 1280, 420, false, true],
+      ["dark-with-links", "62", {}, false, 390, 358, true, true],
     ]) {
       await page.setViewportSize({width: viewport, height: 620});
-      await page.evaluate(({value, changes, compact, cardWidth, dark, base}) => {
+      await page.evaluate(({value, changes, compact, cardWidth, dark, withLinks, base}) => {
         document.body.className = dark ? "dark" : "";
         const main = document.querySelector("main"); main.style.width = cardWidth + "px"; main.style.padding = "0"; main.style.marginTop = "20px";
-        const card = document.createElement("calor-gas-card"); card.setConfig({entity: "sensor.demo_tank", compact});
+        const card = document.createElement(withLinks ? "calor-gas-card-with-links" : "calor-gas-card"); card.setConfig({entity: "sensor.demo_tank", compact});
         card.hass = {locale: {language: "en-IE"}, config: {time_zone: "Europe/Dublin"}, states: {
           "sensor.demo_tank": {entity_id: "sensor.demo_tank", state: value, attributes: {...base, ...changes}},
         }};
         main.replaceChildren(card); window.card = card;
-      }, {value, changes, compact, cardWidth, dark, base});
+      }, {value, changes, compact, cardWidth, dark, withLinks, base});
       await page.waitForTimeout(50);
       const result = await page.evaluate(() => {
         const root = window.card.shadowRoot, outer = window.card.getBoundingClientRect();
         const visible = [...root.querySelectorAll(".level,.days,.source,.badge")].filter(e => e.getBoundingClientRect().width);
         return {width: outer.width, height: outer.height, level: root.querySelector(".level").textContent,
-          source: root.querySelector(".source").textContent,
+          source: root.querySelector(".source").textContent, links: root.querySelectorAll("a").length,
           overflow: visible.some(e => {const r=e.getBoundingClientRect();return r.left < outer.left - .5 || r.right > outer.right + .5 || e.scrollWidth > e.clientWidth + 1;})};
       });
       assert.equal(result.overflow, false, name + " overflow");
+      assert.equal(result.links, withLinks ? 2 : 0, name + " quick links");
       if (name === "unavailable") assert.equal(result.level, "Unavailable");
       if (name === "zero") assert.equal(result.level, "0%");
       if (name === "cached") assert.match(result.source, /Cached/);
-      if (name !== "zero") await page.locator("calor-gas-card").screenshot({path: path.join(screenshots, name + ".png")});
+      if (name !== "zero") await page.locator("calor-gas-card,calor-gas-card-with-links").screenshot({path: path.join(screenshots, name + ".png")});
       proof.push({scenario: name, viewport, ...result});
     }
     await page.evaluate(() => {
@@ -87,7 +90,7 @@ const {chromium} = require("playwright");
       window.card.setConfig({entity:"sensor.demo_tank",name:'<img src=x onerror="window.__pwned=true">'});
     });
     assert.equal(await page.evaluate(() => window.__pwned), undefined);
-    assert.equal(await page.locator("calor-gas-card").evaluate(c=>c.shadowRoot.querySelectorAll("img").length), 0);
+    assert.equal(await page.locator("calor-gas-card,calor-gas-card-with-links").evaluate(c=>c.shadowRoot.querySelectorAll("img").length), 0);
     await page.evaluate(() => {
       const card = document.createElement("calor-gas-card");
       card.setConfig({entity:"sensor.demo_tank"});
@@ -104,7 +107,9 @@ const {chromium} = require("playwright");
       const form=editor.shadowRoot.querySelector("ha-form");
       return form.schema.map(s=>s.name);
     });
-    assert.ok(editor.includes("entity"));assert.ok(!editor.some(s=>/password|username/.test(s)));
+    assert.ok(editor.includes("entity"));assert.ok(editor.includes("show_links"));assert.ok(!editor.some(s=>/password|username/.test(s)));
+    const presets = await page.evaluate(() => window.customCards.filter(c => c.type.startsWith("calor-gas-card")).map(c => c.type));
+    assert.deepEqual(presets, ["calor-gas-card", "calor-gas-card-with-links"]);
     assert.deepEqual(errors, []);
     fs.mkdirSync(path.join(root, "test-results"), {recursive: true});
     fs.writeFileSync(path.join(root, "test-results/ui.json"), JSON.stringify({synthetic_data: true, errors, proof, more_info_event: true, injection_safe: true, context_unsubscribe: true, visual_editor: true}, null, 2));

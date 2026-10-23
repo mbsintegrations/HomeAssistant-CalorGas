@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Skymashi
+# SPDX-FileCopyrightText: 2026 MBS Integrations
 # SPDX-License-Identifier: GPL-3.0-only
 
 """Build a manual-install ZIP containing only the public integration."""

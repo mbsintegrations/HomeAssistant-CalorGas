@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Skymashi
+# SPDX-FileCopyrightText: 2026 MBS Integrations
 # SPDX-License-Identifier: GPL-3.0-only
 
 """Portal estimates and source dates, with explicit freshness metadata."""

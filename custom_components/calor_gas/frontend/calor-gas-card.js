@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2026 Skymashi
+// SPDX-FileCopyrightText: 2026 MBS Integrations
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {tankModel, displayDate, displaySync} from "./card-model.js";
@@ -10,14 +10,14 @@ const STYLES = [
   "ha-card.low{border-color:#d9383270;background:linear-gradient(140deg,#df352f0d,transparent)}",
   "header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}",
   "h2{font-size:17px;line-height:24px;font-weight:650;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
-  ".badge{font-size:11px;font-weight:600;white-space:nowrap;padding:4px 8px;border-radius:12px;background:#2e7d3212;color:#327548;flex-shrink:0}",
-  ".cached .badge{background:#b56d0015;color:#a66400}.unavailable .badge{background:#7a879012;color:var(--secondary-text-color,#6e7882)}",
+  ".badge{font-size:11px;font-weight:600;white-space:nowrap;padding:4px 8px;border-radius:12px;background:#2e7d3212;color:var(--primary-text-color,#1c2733);flex-shrink:0}",
+  ".cached .badge{background:#b56d0015}.unavailable .badge{background:#7a879012;color:var(--secondary-text-color,#6e7882)}",
   ".body{display:grid;grid-template-columns:minmax(76px,118px) minmax(0,1fr);gap:18px;align-items:center;min-height:104px;cursor:pointer;border-radius:10px;outline-offset:3px}",
   ".tank{width:100%;align-self:center}.tank svg{display:block;width:100%;filter:drop-shadow(0 4px 4px #0d20300c)}",
   ".metrics{min-width:0}.level{font-size:38px;font-weight:700;line-height:1.1;letter-spacing:-1px;white-space:nowrap}.low .level{color:#d32f2f}",
   ".unavailable .level{font-size:22px;letter-spacing:0}.compact.unavailable .level{font-size:13px}.days{font-size:14px;line-height:23px;font-weight:600;margin-top:3px}.source{font-size:12px;color:var(--secondary-text-color,#6e7882);line-height:18px;margin-top:3px}",
   ".notice{font-size:12px;line-height:18px;color:var(--secondary-text-color,#6e7882);padding:8px 0 2px}",
-  ".notice strong{color:#a66400;font-weight:600}details{border-top:1px solid var(--divider-color,#e1e5e8);margin-top:12px;padding-top:10px}",
+  ".notice strong{color:var(--primary-text-color,#1c2733);font-weight:600}details{border-top:1px solid var(--divider-color,#e1e5e8);margin-top:12px;padding-top:10px}",
   "summary{cursor:pointer;font-size:12px;color:var(--secondary-text-color,#6e7882)}dl{display:grid;grid-template-columns:1fr 1.2fr;gap:7px 10px;font-size:12px;margin:12px 0 0;line-height:18px}dt{color:var(--secondary-text-color,#6e7882)}dd{margin:0;text-align:right;overflow-wrap:anywhere}",
   "a{color:var(--primary-color,#168bb0);font-size:12px;text-decoration:none}.links{display:flex;justify-content:space-between;gap:12px;margin-top:12px}",
   "ha-card.compact{padding:10px 12px;min-height:94px}ha-card.compact header{display:none}ha-card.compact .body{min-height:72px;grid-template-columns:minmax(44px,64px) minmax(0,1fr);gap:8px}ha-card.compact .level{font-size:28px}ha-card.compact .days{font-size:12px;line-height:18px}ha-card.compact .source{font-size:11px;line-height:16px}.compact .notice,.compact .links,.compact details{display:none}",
@@ -48,7 +48,7 @@ export class CalorGasCard extends HTMLElement {
     if (typeof threshold !== "number" || !Number.isFinite(threshold) || threshold < 0 || threshold > 100) {
       throw new Error("Low-level threshold must be between 0 and 100.");
     }
-    this._config = {name: "Calor Gas", show_details: true, compact: false, ...config};
+    this._config = {name: "Calor Gas", show_details: true, show_links: false, compact: false, ...config};
     this._render();
   }
   set hass(value) { this._hass = value; this._states = value?.states; this._render(); }
@@ -66,7 +66,7 @@ export class CalorGasCard extends HTMLElement {
   }
   disconnectedCallback() { this._unsubscribe?.(); this._unsubscribe = undefined; }
   getCardSize() { return this._config?.compact ? 2 : this._config?.show_details ? 5 : 3; }
-  getGridOptions() { return {columns: 6, min_columns: 6, min_rows: this._config?.compact ? 2 : 3}; }
+  getGridOptions() { return {columns: this._config?.compact ? 6 : 12, min_columns: 6, min_rows: this._config?.compact ? 2 : 3}; }
   _moreInfo() {
     this.dispatchEvent(new CustomEvent("hass-more-info", {
       bubbles: true, composed: true, detail: {entityId: this._config.entity},
@@ -128,14 +128,23 @@ export class CalorGasCard extends HTMLElement {
       ]) list.append(element("dt", "", label), element("dd", "", value));
       details.append(list); card.append(details);
     }
-    const links = element("div", "links");
-    const portal = element("a", "", "MyCalorGas"); portal.href = "https://www.mycalorgas.com/TankDelivery";
-    portal.target = "_blank"; portal.rel = "noopener noreferrer";
-    const setup = element("a", "", "Integration settings"); setup.href = "/config/integrations/integration/calor_gas";
-    links.append(portal, setup); card.append(links);
+    if (this._config.show_links) {
+      const links = element("div", "links");
+      const portal = element("a", "", "MyCalorGas"); portal.href = "https://www.mycalorgas.com/TankDelivery";
+      portal.target = "_blank"; portal.rel = "noopener noreferrer";
+      const setup = element("a", "", "Integration settings"); setup.href = "/config/integrations/integration/calor_gas";
+      links.append(portal, setup); card.append(links);
+    }
     const style = element("style"); style.textContent = STYLES;
     this.shadowRoot.replaceChildren(style, card);
   }
+}
+
+class CalorGasCardWithLinks extends CalorGasCard {
+  static getStubConfig(hass) {
+    return {...super.getStubConfig(hass), type: "custom:calor-gas-card-with-links", show_links: true};
+  }
+  setConfig(config) { super.setConfig({show_links: true, ...config}); }
 }
 
 class CalorGasCardEditor extends HTMLElement {
@@ -150,13 +159,14 @@ class CalorGasCardEditor extends HTMLElement {
       {name: "name", selector: {text: {}}},
       {name: "compact", selector: {boolean: {}}},
       {name: "show_details", selector: {boolean: {}}},
+      {name: "show_links", selector: {boolean: {}}},
       {name: "low_threshold", selector: {number: {min: 0, max: 100, step: 1, mode: "box", unit_of_measurement: "%"}}},
     ];
     const labels = {entity: "Tank level sensor", name: "Card title", compact: "Compact layout",
-      show_details: "Show reading details", low_threshold: "Low-level warning below"};
+      show_details: "Show reading details", show_links: "Show quick links", low_threshold: "Low-level warning below"};
     form.computeLabel = schema => labels[schema.name] || schema.name;
     form.addEventListener("value-changed", event => {
-      event.stopPropagation(); this._config = {...event.detail.value, type: "custom:calor-gas-card"};
+      event.stopPropagation(); this._config = {...event.detail.value, type: this._config.type || "custom:calor-gas-card"};
       this.dispatchEvent(new CustomEvent("config-changed", {detail: {config: this._config}, bubbles: true, composed: true}));
     });
     this.shadowRoot.replaceChildren(form);
@@ -164,8 +174,13 @@ class CalorGasCardEditor extends HTMLElement {
 }
 
 if (!customElements.get("calor-gas-card")) customElements.define("calor-gas-card", CalorGasCard);
+if (!customElements.get("calor-gas-card-with-links")) customElements.define("calor-gas-card-with-links", CalorGasCardWithLinks);
 if (!customElements.get("calor-gas-card-editor")) customElements.define("calor-gas-card-editor", CalorGasCardEditor);
 window.customCards = window.customCards || [];
 if (!window.customCards.some(card => card.type === "calor-gas-card")) window.customCards.push({
-  type: "calor-gas-card", name: "Calor Gas tank", description: "Tank level, remaining days and saved readings during portal outages.", preview: true,
+  type: "calor-gas-card", name: "Calor Gas tank", description: "Tank level, remaining days and saved readings without footer links.", preview: true,
+});
+
+if (!window.customCards.some(card => card.type === "calor-gas-card-with-links")) window.customCards.push({
+  type: "calor-gas-card-with-links", name: "Calor Gas tank with links", description: "Tank readings with MyCalorGas and integration settings links.", preview: true,
 });

@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: 2026 Skymashi -->
+<!-- SPDX-FileCopyrightText: 2026 MBS Integrations -->
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
 <defs><linearGradient id="metal" x2="0" y2="1"><stop stop-color="#f5f8fa"/><stop offset="1" stop-color="#bfcbd4"/></linearGradient><clipPath id="body"><rect x="26" y="99" width="204" height="98" rx="49"/></clipPath></defs>

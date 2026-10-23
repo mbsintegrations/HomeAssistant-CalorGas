@@ -7,13 +7,13 @@
     "lovelace"
   ],
   "codeowners": [
-    "@Skymashi"
+    "@mbsintegrations"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/Skymashi/HomeAssistant-CalorGas",
+  "documentation": "https://github.com/mbsintegrations/HomeAssistant-CalorGas",
   "integration_type": "service",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/Skymashi/HomeAssistant-CalorGas/issues",
+  "issue_tracker": "https://github.com/mbsintegrations/HomeAssistant-CalorGas/issues",
   "requirements": [],
   "version": "1.1.0b1"
 }

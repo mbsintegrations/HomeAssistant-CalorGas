@@ -1,20 +1,22 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="custom_components/calor_gas/brand/dark_logo@2x.png">
-  <img alt="Calor Gas for Home Assistant" src="custom_components/calor_gas/brand/logo@2x.png" width="512">
-</picture>
+<img alt="Calor Gas logo" src="https://raw.githubusercontent.com/mbsintegrations/HomeAssistant-CalorGas/main/custom_components/calor_gas/brand/icon.png" width="112">
 
 # Calor Gas for Home Assistant
 
-[![Validation](https://github.com/Skymashi/HomeAssistant-CalorGas/actions/workflows/validate.yml/badge.svg)](https://github.com/Skymashi/HomeAssistant-CalorGas/actions/workflows/validate.yml)
+[![Validation](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml/badge.svg)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml)
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://www.hacs.xyz/docs/faq/custom_repositories/)
-[![Release](https://img.shields.io/github/v/release/Skymashi/HomeAssistant-CalorGas?include_prereleases)](https://github.com/Skymashi/HomeAssistant-CalorGas/releases)
+[![Release](https://img.shields.io/github/v/release/mbsintegrations/HomeAssistant-CalorGas?include_prereleases)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+
+[![Open HACS repository on Home Assistant](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mbsintegrations&repository=HomeAssistant-CalorGas&category=integration)
+[![Add integration to Home Assistant](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=calor_gas)
+
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://paypal.me/mwahl1973)
 
 See your MyCalorGas tank level, estimated days remaining and delivery status in Home Assistant. A bundled tank card provides desktop, phone and compact layouts, with a visual editor and clear indicators when the portal is unavailable.
 
 This is an **unofficial community integration**, with original artwork. It is not affiliated with or endorsed by Calor. It is a custom integration installed through HACS or manually; it does not require a Supervisor add-on.
 
-**First public beta:** `1.1.0b1`. Available as a HACS custom repository. It has not been accepted into the default HACS catalogue.
+**First public beta:** `1.1.0b1`. Available as a HACS custom repository.
 
 ## Features
 
@@ -51,16 +53,16 @@ Development is based on the MyCalorGas portal used in Ireland. Other Calor websi
 
 1. Install and configure [HACS](https://www.hacs.xyz/docs/use/) if needed.
 2. In **HACS**, open the top-right menu and choose **Custom repositories**.
-3. Add `https://github.com/Skymashi/HomeAssistant-CalorGas` with type **Integration**.
+3. Add `https://github.com/mbsintegrations/HomeAssistant-CalorGas` with type **Integration**.
 4. Find **Calor Gas**, open it and select **Download**. For the first beta, select `1.1.0b1` if offered, enable beta versions if needed, or select the default branch.
 5. **Restart Home Assistant**.
 6. Continue with [Connect your account](#connect-your-account).
 
-Adding a custom repository makes it available in your own HACS installation. Default catalogue inclusion requires a separate HACS maintainer review.
+Adding a custom repository makes it available in your own HACS installation.
 
 ## Manual installation
 
-1. Download **`calor_gas.zip`** from a [release](https://github.com/Skymashi/HomeAssistant-CalorGas/releases).
+1. Download **`calor_gas.zip`** from a [release](https://github.com/mbsintegrations/HomeAssistant-CalorGas/releases).
 2. Extract it into the `custom_components` folder inside your Home Assistant configuration directory. Create that folder if needed.
 3. Confirm this structure; avoid a second nested `calor_gas` directory:
 
@@ -98,9 +100,9 @@ A first installation needs one successful reading. If Calor is unavailable befor
 For normal storage-managed dashboard resources, the integration registers its bundled JavaScript module automatically.
 
 1. Open your dashboard and select **Edit dashboard → Add card**.
-2. Select **Calor Gas Tank** (refresh the browser if it does not appear).
+2. Select **Calor Gas tank** for a clean layout, or **Calor Gas tank with links** for MyCalorGas and integration settings shortcuts (refresh the browser if they do not appear). Both follow the active Home Assistant light or dark theme.
 3. Choose the **Tank level** entity belonging to this integration in the visual editor.
-4. Adjust the title, compact layout, details and low-level threshold as desired, then save.
+4. Adjust the title, compact layout, details, **Show quick links** and low-level threshold as desired, then save.
 
 Only one entity is needed; forecast and freshness information are read from that entity's attributes. Entity names can vary between installations, so use your actual entity ID.
 
@@ -119,9 +121,22 @@ low_threshold: 20
 | `name` | `Calor Gas` | Card title |
 | `compact` | `false` | Small layout suitable for a narrow dashboard column |
 | `show_details` | `true` | Expandable reading, sync, run-out and delivery details |
+| `show_links` | `false` (`true` for the with-links preset) | MyCalorGas and integration settings shortcuts; hidden in compact mode |
 | `low_threshold` | `20` | Low indication when level is strictly below this percentage |
 
-Click or press Enter on the tank to open Home Assistant's native more-info dialog. The MyCalorGas link opens the provider website. The settings link opens the integration settings. The card sends no credentials and loads no external scripts.
+For the with-links preset in YAML, use `type: custom:calor-gas-card-with-links`, or set `show_links: true` on the standard card.
+
+Click or press Enter on the tank to open Home Assistant's native more-info dialog. Manage the integration through **Settings → Devices & services → Calor Gas**. The card sends no credentials and loads no external scripts.
+
+### Card layout choices
+
+These previews use synthetic demonstration readings. Both card presets follow your Home Assistant theme.
+
+| Without links | With links |
+| --- | --- |
+| ![Light without links](docs/images/healthy.png) | ![Light with links](docs/images/with-links.png) |
+| ![Dark without links](docs/images/dark.png) | ![Dark with links](docs/images/dark-with-links.png) |
+
 
 ### Manual card resource / YAML dashboards
 
@@ -141,6 +156,10 @@ lovelace:
 ```
 
 YAML resources are not changed automatically. Update the versioned URL when upgrading. No separate frontend download or HACS dashboard repository is needed.
+
+### HACS catalogue icon
+
+The integration includes its own icons and light/dark logos in `custom_components/calor_gas/brand/`. HACS 2.0.5 still loads catalogue icons from the legacy Home Assistant brands server, so its store list can show an unavailable-icon placeholder for new custom integrations. This is tracked by [HACS frontend #937](https://github.com/hacs/frontend/pull/937) and [HACS integration #5171](https://github.com/hacs/integration/issues/5171). It does not indicate a failed installation. Home Assistant uses the bundled assets after installation and restart.
 
 ## Sensors and freshness
 
@@ -207,10 +226,10 @@ The Python suite exercises the real parser, cache, coordinator, sensors, credent
 
 GitHub Actions also run the official **HACS validator** and **Hassfest**, without ignored checks. See [HACS compliance and release checks](docs/HACS.md), [contributing](CONTRIBUTING.md), [changes](CHANGELOG.md) and [security reporting](SECURITY.md).
 
-The backend builds on a privately used installation. The first public beta adds reusable packaging and the card; adapter/browser tests are not a substitute for a fresh end-to-end Home Assistant acceptance test.
+Fresh Home Assistant 2026.10.1 acceptance checks verified installation through HACS, the native credential popup, a successful portal connection, all six sensors, local branding, persistent Store creation, automatic card resource registration, both card presets in the picker, visual editing and native more-info. Both presets were rendered in the native light and dark themes. Portal-outage and restart-cache behaviour are covered by the regression suite; physical tank accuracy is not verified by software tests.
 
 ## License
 
-Copyright 2026 Skymashi. Code, documentation and original artwork are licensed under the **[GNU General Public License v3.0 only](LICENSE)** (`GPL-3.0-only`). Distributions must comply with its source, notice and licence requirements. A copy of the licence is also included inside the installable integration and manual ZIP.
+Copyright 2026 MBS Integrations. Code, documentation and original artwork are licensed under the **[GNU General Public License v3.0 only](LICENSE)** (`GPL-3.0-only`). Distributions must comply with its source, notice and licence requirements. A copy of the licence is also included inside the installable integration and manual ZIP.
 
 See [acknowledgements](ACKNOWLEDGEMENTS.md) for project references. Calor and Home Assistant names belong to their respective owners; their trademarks are not granted by this licence. The initial pre-release Git history carried MIT notices; this licence change applies to the current code and forthcoming release and does not revoke earlier grants.

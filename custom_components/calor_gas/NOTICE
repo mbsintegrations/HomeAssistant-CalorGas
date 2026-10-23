@@ -1,10 +1,10 @@
 Calor Gas for Home Assistant
-Copyright 2026 Skymashi
+Copyright 2026 MBS Integrations
 SPDX-License-Identifier: GPL-3.0-only
 
 This integration, its bundled card and original artwork are distributed under
 the GNU General Public License version 3 only. See the accompanying LICENSE.
-Source and acknowledgements: https://github.com/Skymashi/HomeAssistant-CalorGas
+Source and acknowledgements: https://github.com/mbsintegrations/HomeAssistant-CalorGas
 
 This is an unofficial community project. Calor, Home Assistant and HACS names
 belong to their respective owners. No endorsement is implied.

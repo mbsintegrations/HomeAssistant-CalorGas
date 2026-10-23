@@ -1,6 +1,6 @@
 # Acknowledgements and provenance
 
-Calor Gas for Home Assistant is maintained by [Skymashi](https://github.com/Skymashi). Its portal client, cache behaviour, tank card and tank/flame artwork were developed for this project.
+Calor Gas for Home Assistant is maintained by [MBS Integrations](https://github.com/mbsintegrations). Its portal client, cache behaviour, tank card and tank/flame artwork were developed for this project.
 
 - [Home Assistant](https://www.home-assistant.io/) supplies the platform and documented config-entry, coordinator, sensor and frontend APIs used here.
 - [HACS](https://www.hacs.xyz/) supplies community distribution and the integration validation guidelines.

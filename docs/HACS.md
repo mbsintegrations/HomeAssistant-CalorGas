@@ -4,7 +4,7 @@ This repository follows the [integration requirements](https://www.hacs.xyz/docs
 
 | Requirement | Implementation |
 | --- | --- |
-| Public GitHub repository | `Skymashi/HomeAssistant-CalorGas` |
+| Public GitHub repository | `mbsintegrations/HomeAssistant-CalorGas` |
 | One integration | Only `custom_components/calor_gas` |
 | All runtime dependencies bundled appropriately | Python, JavaScript, English translations and brand PNGs are within that integration directory; no external runtime pip requirements |
 | Required manifest fields | Domain, name, version, documentation, issue tracker and codeowners are present |
@@ -26,7 +26,7 @@ For default inclusion, follow [HACS's official submission process](https://www.h
 1. Confirm a clean HA installation and update path work, including credential setup and bundled card loading.
 2. Pass official HACS validation and Hassfest without errors or ignores.
 3. Publish a full GitHub release after those checks pass.
-4. As owner or major contributor, fork `hacs/default`, create a new branch from its `master`, and add `Skymashi/HomeAssistant-CalorGas` in sorted order to the `integration` file.
+4. As owner or major contributor, fork `hacs/default`, create a new branch from its `master`, and add `mbsintegrations/HomeAssistant-CalorGas` in sorted order to the `integration` file.
 5. Complete the PR template truthfully, permit maintainer edits and wait for review. Review may take months.
 
 Do not claim default catalogue acceptance until HACS maintainers have approved and merged the submission. This integration is initially published as a beta custom repository.
