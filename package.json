@@ -9,7 +9,7 @@
     "build:release": "python scripts/build_release.py"
   },
   "devDependencies": {
-    "playwright": "1.62.1"
+    "playwright": "1.64.1"
   },
   "license": "GPL-3.0-only"
 }
