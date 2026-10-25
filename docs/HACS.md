@@ -13,7 +13,7 @@ This repository follows the [integration requirements](https://www.hacs.xyz/docs
 | Usage information | README covers requirements, setup, HACS/manual installation, card, updates, removal and limitations |
 | Discoverability | GitHub description, topics and enabled issue tracker |
 | Reproducible checks | HACS validator, Hassfest, Python/Node regression tests and synthetic Playwright UI checks |
-| Release | Full GitHub prerelease with a manual ZIP and SHA-256 checksum |
+| Release | Full normal GitHub release with a manual ZIP and SHA-256 checksum |
 
 The bundled card is part of the integration. All its runtime files are inside the integration directory so HACS installs them together. It is not a separate HACS plugin repository.
 
@@ -29,12 +29,12 @@ For default inclusion, follow [HACS's official submission process](https://www.h
 4. As owner or major contributor, fork `hacs/default`, create a new branch from its `master`, and add `mbsintegrations/HomeAssistant-CalorGas` in sorted order to the `integration` file.
 5. Complete the PR template truthfully, permit maintainer edits and wait for review. Review may take months.
 
-Do not claim default catalogue acceptance until HACS maintainers have approved and merged the submission. This integration is initially published as a beta custom repository.
+Do not claim default catalogue acceptance until HACS maintainers have approved and merged the submission. Until catalogue acceptance, install version 1.1.0 as a custom repository.
 
 ## Before a release
 
 - Test and review code, package contents, screenshots and documentation for private data.
 - Keep version strings aligned and ensure all mandatory checks pass.
 - Build `dist/calor_gas.zip` and `dist/SHA256SUMS` with `python scripts/build_release.py`.
-- Publish a matching tag and release with those assets; mark beta releases as prereleases.
+- Publish a matching tag and release with those assets; use the normal release number without a beta suffix.
 - Verify remote commit, release tag and downloaded asset checksums.
