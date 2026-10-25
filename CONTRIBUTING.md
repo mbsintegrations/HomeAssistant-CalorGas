@@ -10,7 +10,7 @@ Playwright is a development dependency used by the browser checks. It is not inc
 
 The Python test suite uses HA adapters; do not describe it as a full Home Assistant end-to-end test. Test fresh installation, reconfiguration, restart/cache recovery and card loading in a separate HA instance before promoting a stable release. Never use household actuators for testing.
 
-All HACS and Hassfest checks must pass without ignores. Changes to the version require matching `manifest.json`, `const.py`, README resource URLs and changelog updates. Keep `strings.json` and `translations/en.json` in sync. The JavaScript package uses the corresponding npm prerelease version.
+All HACS and Hassfest checks must pass without ignores. Changes to the version require matching `manifest.json`, `const.py`, README resource URLs and changelog updates. Keep `strings.json` and `translations/en.json` in sync. The JavaScript package uses the same normal release version.
 
 Contributions are distributed under the repository's GNU GPL v3.0-only license.
 

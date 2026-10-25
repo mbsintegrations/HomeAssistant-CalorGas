@@ -4,19 +4,20 @@
 
 [![Validation](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml/badge.svg)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml)
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://www.hacs.xyz/docs/faq/custom_repositories/)
-[![Release](https://img.shields.io/github/v/release/mbsintegrations/HomeAssistant-CalorGas?include_prereleases)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/releases)
+[![Release](https://img.shields.io/github/v/release/mbsintegrations/HomeAssistant-CalorGas)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 [![Open HACS repository on Home Assistant](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mbsintegrations&repository=HomeAssistant-CalorGas&category=integration)
 [![Add integration to Home Assistant](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=calor_gas)
 
+[![MBS Integrations](https://img.shields.io/badge/Website-mbsintegrations.ie-0078D4?style=flat)](https://mbsintegrations.ie)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://paypal.me/mwahl1973)
 
 See your MyCalorGas tank level, estimated days remaining and delivery status in Home Assistant. A bundled tank card provides desktop, phone and compact layouts, with a visual editor and clear indicators when the portal is unavailable.
 
-This is an **unofficial community integration**, with original artwork. It is not affiliated with or endorsed by Calor. It is a custom integration installed through HACS or manually; it does not require a Supervisor add-on.
+This custom integration is installed through HACS or manually; it does not require a Supervisor add-on. It is not affiliated with or endorsed by Calor.
 
-**First public beta:** `1.1.0b1`. Available as a HACS custom repository.
+**Current release:** `1.1.0`. Available as a HACS custom repository.
 
 ## Features
 
@@ -54,7 +55,7 @@ Development is based on the MyCalorGas portal used in Ireland. Other Calor websi
 1. Install and configure [HACS](https://www.hacs.xyz/docs/use/) if needed.
 2. In **HACS**, open the top-right menu and choose **Custom repositories**.
 3. Add `https://github.com/mbsintegrations/HomeAssistant-CalorGas` with type **Integration**.
-4. Find **Calor Gas**, open it and select **Download**. For the first beta, select `1.1.0b1` if offered, enable beta versions if needed, or select the default branch.
+4. Find **Calor Gas**, open it and select **Download**. Select the normal `1.1.0` release; enabling beta versions is unnecessary.
 5. **Restart Home Assistant**.
 6. Continue with [Connect your account](#connect-your-account).
 
@@ -143,7 +144,7 @@ These previews use synthetic demonstration readings. Both card presets follow yo
 If automatic registration is unavailable, add this resource as **JavaScript Module** in **Settings → Dashboards → Resources** (advanced mode may be required):
 
 ```text
-/calor_gas/frontend/1.1.0b1/calor-gas-card.js
+/calor_gas/frontend/1.1.0/calor-gas-card.js
 ```
 
 For YAML-managed resources, add the following to your existing `lovelace.resources` list without replacing other resources:
@@ -151,7 +152,7 @@ For YAML-managed resources, add the following to your existing `lovelace.resourc
 ```yaml
 lovelace:
   resources:
-    - url: /calor_gas/frontend/1.1.0b1/calor-gas-card.js
+    - url: /calor_gas/frontend/1.1.0/calor-gas-card.js
       type: module
 ```
 
