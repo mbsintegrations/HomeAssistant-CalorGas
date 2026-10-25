@@ -21,6 +21,8 @@ The bundled card is part of the integration. All its runtime files are inside th
 
 Users may add this repository themselves as **Integration** in HACS. This does not imply inclusion in the default catalogue.
 
+[Default-catalogue submission #12620](https://github.com/hacs/default/pull/12620) was opened on 25 October 2026 for normal release **1.1.0**. Maintainer review is pending; installation as a custom repository remains available now.
+
 For default inclusion, follow [HACS's official submission process](https://www.hacs.xyz/docs/publish/include/):
 
 1. Confirm a clean HA installation and update path work, including credential setup and bundled card loading.

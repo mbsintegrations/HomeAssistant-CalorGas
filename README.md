@@ -19,6 +19,8 @@ This custom integration is installed through HACS or manually; it does not requi
 
 **Current release:** `1.1.0`. Available as a HACS custom repository.
 
+[Default HACS catalogue submission #12620](https://github.com/hacs/default/pull/12620) is awaiting review. Use the custom-repository installation below until it is accepted.
+
 ## Features
 
 - Native Home Assistant setup dialog with email and masked password fields; no credentials in dashboard YAML.
