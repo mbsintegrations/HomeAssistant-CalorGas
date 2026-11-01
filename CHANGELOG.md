@@ -1,5 +1,11 @@
 # Changes
 
+## Unreleased
+
+### Development
+
+- Update the GitHub Python setup action to 7.1.0 and refresh the Hassfest action pin. These CI-only changes do not alter the installed integration or dashboard cards.
+
 ## 1.1.0 — 2026-10-25
 
 Normal public release, packaged as a HACS custom integration under GNU GPL v3.0 only.
