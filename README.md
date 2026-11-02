@@ -3,7 +3,7 @@
 # Calor Gas for Home Assistant
 
 [![Validation](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml/badge.svg)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/actions/workflows/validate.yml)
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://www.hacs.xyz/docs/faq/custom_repositories/)
+[![HACS Default](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default/pull/12620)
 [![Release](https://img.shields.io/github/v/release/mbsintegrations/HomeAssistant-CalorGas)](https://github.com/mbsintegrations/HomeAssistant-CalorGas/releases)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
@@ -17,9 +17,7 @@ See your MyCalorGas tank level, estimated days remaining and delivery status in 
 
 This custom integration is installed through HACS or manually; it does not require a Supervisor add-on. It is not affiliated with or endorsed by Calor.
 
-**Current release:** `1.1.0`. Available as a HACS custom repository.
-
-[Default HACS catalogue submission #12620](https://github.com/hacs/default/pull/12620) is awaiting review. Use the custom-repository installation below until it is accepted.
+**Current release:** `1.1.0`. Included in the default [HACS catalogue](https://github.com/hacs/default/pull/12620) since 2 November 2026.
 
 ## Features
 
@@ -54,14 +52,25 @@ Development is based on the MyCalorGas portal used in Ireland. Other Calor websi
 
 ## Install with HACS
 
-1. Install and configure [HACS](https://www.hacs.xyz/docs/use/) if needed.
-2. In **HACS**, open the top-right menu and choose **Custom repositories**.
-3. Add `https://github.com/mbsintegrations/HomeAssistant-CalorGas` with type **Integration**.
-4. Find **Calor Gas**, open it and select **Download**. Select the normal `1.1.0` release; enabling beta versions is unnecessary.
-5. **Restart Home Assistant**.
-6. Continue with [Connect your account](#connect-your-account).
+Calor Gas is included in the default HACS catalogue.
 
-Adding a custom repository makes it available in your own HACS installation.
+1. Install and configure [HACS](https://www.hacs.xyz/docs/use/) if needed.
+2. Open **HACS** from the Home Assistant sidebar and search for **Calor Gas**. If using a type filter, select **Integration**.
+3. Open **Calor Gas** and select **Download**. Select the normal `1.1.0` release; enabling beta versions is unnecessary.
+4. **Restart Home Assistant**.
+5. Continue with [Connect your account](#connect-your-account).
+
+The **Open HACS repository** button above also opens the repository in your own Home Assistant installation.
+
+### Custom repository fallback
+
+If Calor Gas is not yet visible in your HACS search, you can add the same repository manually:
+
+1. In **HACS**, open the top-right menu and choose **Custom repositories**.
+2. Add `https://github.com/mbsintegrations/HomeAssistant-CalorGas` with type **Integration**.
+3. Find **Calor Gas**, select **Download**, restart Home Assistant and [connect your account](#connect-your-account).
+
+If you already installed Calor Gas through HACS as a custom repository, keep using that installation and its normal HACS updates. Catalogue inclusion does not require reinstalling the integration or entering your credentials again.
 
 ## Manual installation
 
@@ -162,7 +171,7 @@ YAML resources are not changed automatically. Update the versioned URL when upgr
 
 ### HACS catalogue icon
 
-The integration includes its own icons and light/dark logos in `custom_components/calor_gas/brand/`. HACS 2.0.5 still loads catalogue icons from the legacy Home Assistant brands server, so its store list can show an unavailable-icon placeholder for new custom integrations. This is tracked by [HACS frontend #937](https://github.com/hacs/frontend/pull/937) and [HACS integration #5171](https://github.com/hacs/integration/issues/5171). It does not indicate a failed installation. Home Assistant uses the bundled assets after installation and restart.
+The integration includes its own icons and light/dark logos in `custom_components/calor_gas/brand/`. Home Assistant uses these assets after installation and restart. Legacy HACS 2.0.5 can still show an unavailable-icon placeholder in its store list; this alone does not indicate a failed installation. See the [upstream icon status](docs/HACS.md#legacy-hacs-icons) for details.
 
 ## Sensors and freshness
 
