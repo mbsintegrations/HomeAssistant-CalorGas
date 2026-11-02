@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Documentation
+
+- Record acceptance into the default HACS catalogue on 2 November 2026 and make HACS search the primary installation method.
+- Keep the custom-repository fallback and full manual installation instructions, and update the HACS badge, listing guidance and legacy icon status.
+
 ### Development
 
 - Update the GitHub Python setup action to 7.1.0 and refresh the Hassfest action pin. These CI-only changes do not alter the installed integration or dashboard cards.
